@@ -18,6 +18,9 @@ const Home = () => {
 
     const navigate = useNavigate();
 
+    // Aquí estableces la URL base del backend usando la variable de entorno
+    const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
     useEffect(() => {
         const id = localStorage.getItem('idUsuario');
 
@@ -29,7 +32,7 @@ const Home = () => {
 
         const fetchUserName = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/Usuario/${id}`);
+                const response = await axios.get(`${apiUrl}/api/Usuario/${id}`);
                 setUserName(response.data.nombre || 'Usuario');
             } catch (error) {
                 console.error('Error al obtener el nombre del usuario', error);
@@ -39,7 +42,7 @@ const Home = () => {
 
         const fetchActivities = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/Actividad/${id}`);
+                const response = await axios.get(`${apiUrl}/api/Actividad/${id}`);
                 setActivities(response.data);
             } catch (error) {
                 console.error('Error al obtener actividades', error);
@@ -48,7 +51,7 @@ const Home = () => {
 
         fetchUserName();
         fetchActivities();
-    }, [navigate]);
+    }, [navigate, apiUrl]);
 
     useEffect(() => {
         if (userName) {
@@ -72,7 +75,7 @@ const Home = () => {
 
             if (savedLocation) {
                 try {
-                    const response = await axios.get(`http://localhost:5000/api/DatosClima/${selectedTask.idActividad}`);
+                    const response = await axios.get(`${apiUrl}/api/DatosClima/${selectedTask.idActividad}`);
                     setWeatherData(response.data);
                     alert('Datos climáticos recuperados de la base de datos.');
                 } catch (error) {
@@ -80,7 +83,7 @@ const Home = () => {
                     const { lat, lon } = savedLocation;
 
                     try {
-                        const response = await axios.post(`http://localhost:5000/api/DatosClima`, {
+                        const response = await axios.post(`${apiUrl}/api/DatosClima`, {
                             IdActividad: selectedTask.idActividad,
                             Latitude: lat,
                             Longitude: lon,
@@ -138,7 +141,7 @@ const Home = () => {
         if (!selectedTask) return;
 
         try {
-            await axios.delete(`http://localhost:5000/api/Actividad/actividad/${selectedTask.idActividad}`);
+            await axios.delete(`${apiUrl}/api/Actividad/actividad/${selectedTask.idActividad}`);
             setActivities(prevActivities => 
                 prevActivities.filter(task => task.idActividad !== selectedTask.idActividad)
             );
@@ -184,6 +187,7 @@ const Home = () => {
             setUserAvatar(avatar);
         }
     }, []);
+
 
     // Determinar la clase CSS y la imagen a usar
     const avatarClass = userAvatar ? 'welcome-icon2' : 'welcome-icon';
