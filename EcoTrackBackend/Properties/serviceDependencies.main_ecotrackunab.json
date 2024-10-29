@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "ignored": "true",
+      "type": "mssql"
+    },
+    "apis1": {
+      "apiEndpoint": "https://ecotrackbackendapi.azure-api.net/",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/EcoTrackBackendapi/apis/EcoTrackBackend",
+      "type": "apis.azure"
+    }
+  }
+}

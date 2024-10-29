@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAllOrigins",
         builder =>
         {
-            builder.WithOrigins("http://localhost:3000", "https://ecotrackprueba.vercel.app")
+            builder.WithOrigins("http://localhost:3000", "https://ecotrackprueba.vercel.app/","ecotrackunab-edebdwczaefhb7fz.centralus-01.azurewebsites.net")
                    .AllowAnyMethod()
                    .AllowAnyHeader()
                    .AllowCredentials(); // Permite credenciales
